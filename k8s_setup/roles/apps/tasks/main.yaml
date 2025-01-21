@@ -4,3 +4,6 @@
 - name: integrate kafka
   import_tasks: kafka.yaml
 
+- name: integrate prometheus
+  import_tasks: prometheus.yaml
+
