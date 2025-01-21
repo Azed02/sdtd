@@ -81,6 +81,9 @@
               - targets:
                 - "alertmanager.monitoring.svc:9093"
         scrape_configs:
+          - job_name: 'prometheus'
+            static_configs:
+              - targets: ['prometheus-service.monitoring.svc:8080']
           - job_name: 'node-exporter'
             kubernetes_sd_configs:
               - role: endpoints
@@ -89,13 +92,23 @@
                 regex: 'node-exporter'
                 action: keep
           - job_name: 'kubernetes-apiservers'
+            scheme: https
             kubernetes_sd_configs:
               - role: endpoints
+            tls_config:
+              ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+              insecure_skip_verify: false
+            bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
             relabel_configs:
-              - source_labels: [__meta_kubernetes_endpoints_name]
-                regex: 'kubernetes'
+              - source_labels: [__meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
                 action: keep
+                regex: kube-apiserver;https
+          - job_name: 'mock application'
+            static_configs:
+              - targets:
+                  - '10.111.25.100:80'
     EOF
+  when: inventory_hostname in groups['control-plane']
   delegate_to: master
 
 - name: Create Prometheus Deployment

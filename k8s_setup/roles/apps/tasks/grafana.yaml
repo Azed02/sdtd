@@ -1,4 +1,4 @@
-- name: Clone Grapahan repository
+- name: Clone Graphana repository
   git:
     repo: 'https://github.com/bibinwilson/kubernetes-grafana.git'
     dest: '/home/jpakin/3A/sdtd/sdtd/k8s_setup/roles/apps/tasks/graphana'
