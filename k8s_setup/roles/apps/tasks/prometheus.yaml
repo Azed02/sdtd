@@ -8,8 +8,8 @@
   when: inventory_hostname in groups['control-plane']
 
 - name: Create Prometheus ClusterRole and ClusterRoleBinding
-  shell: |
-    kubectl --kubeconfig=/home/asmae/.kube/config apply -f - <<EOF
+  shell: | # clusterRole.yaml
+    kubectl --kubeconfig=/home/asmae/.kube/config apply -f - <<EOF 
     apiVersion: rbac.authorization.k8s.io/v1
     kind: ClusterRole
     metadata:
@@ -47,7 +47,7 @@
   when: inventory_hostname in groups['control-plane']
 
 - name: Create Prometheus ConfigMap
-  shell: |
+  shell: |   # config-map.yaml
     kubectl --kubeconfig=/home/asmae/.kube/config apply -f - <<EOF
     apiVersion: v1
     kind: ConfigMap
@@ -99,7 +99,7 @@
   delegate_to: master
 
 - name: Create Prometheus Deployment
-  shell: |
+  shell: |  # prometheus-deployment.yaml
     kubectl --kubeconfig=/home/asmae/.kube/config apply -f - <<EOF
     apiVersion: apps/v1
     kind: Deployment
@@ -152,7 +152,7 @@
 
 
 - name: Create Prometheus Service (node port)
-  shell: |
+  shell: |  # prometheus-service.yaml
     kubectl --kubeconfig=/home/asmae/.kube/config apply -f - <<EOF
       apiVersion: v1
       kind: Service

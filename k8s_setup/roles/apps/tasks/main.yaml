@@ -7,3 +7,8 @@
 - name: integrate prometheus
   import_tasks: prometheus.yaml
 
+- name: integrate alertmanager
+  import_tasks: alertmanager.yaml
+
+- name: integrate grafana
+  import_tasks: grafana.yaml
