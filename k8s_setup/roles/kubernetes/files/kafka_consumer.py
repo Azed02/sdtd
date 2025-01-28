@@ -48,7 +48,7 @@ _consumer = KafkaConsumer(
     value_deserializer=lambda v: json.loads(v.decode("utf-8")),
 )
 
-BUCKET_NAME = "state-sdtd-1"
+BUCKET_NAME = "bucket-marwa"
 
 # Ensure the results directory exists
 RESULTS_DIR = "/tmp/simulation_results"

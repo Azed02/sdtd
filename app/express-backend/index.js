@@ -20,7 +20,7 @@ const storage = new Storage({
   keyFilename: '/secrets/key-file.json', // Path to the mounted service account key file
 });
 
-const bucketName = 'state-sdtd-1'; // Replace with your GCP bucket name
+const bucketName = 'bucket-marwa'; // Replace with your GCP bucket name
 
 // Route to fetch the latest image/GIF from the GCP bucket
 app.get('/api/image', async (req, res) => {
