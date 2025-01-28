@@ -10,7 +10,7 @@
     dest: /tmp/kafka-automation.yaml
   delegate_to: localhost
   run_once: true
-
+  
 - name: Log first 100 lines of the rendered YAML
   ansible.builtin.shell: "head -n 100 /tmp/kafka-automation.yaml"
   delegate_to: localhost
@@ -36,3 +36,4 @@
 
 - name: Deploy Frontend and Backend Applications
   import_tasks: frontend-backend.yaml
+
