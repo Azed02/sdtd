@@ -18,7 +18,9 @@ const storage = new Storage({
   keyFilename: '/secrets/key-file.json', // Path to the mounted service account key file
 });
 
+
 const bucketName = 'bucket-marwa'; // Replace with your actual GCP bucket name
+
 
 /**
  * Fetch the latest image for a given pod ID from the GCP bucket.
