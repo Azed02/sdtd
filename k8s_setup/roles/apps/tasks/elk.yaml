@@ -1,0 +1,62 @@
+    - name: Clone ELK-kubernetes repository
+      ansible.builtin.git:
+        repo: https://github.com/hussainaphroj/ELK-kubernetes.git
+        dest: /ELK-kubernetes
+      when: inventory_hostname in groups['control-plane']
+
+    - name: Apply RBAC configuration
+      ansible.builtin.command: >
+        kubectl --kubeconfig=/home/asmae/.kube/config apply -f /ELK-kubernetes/rbac.yml
+      when: inventory_hostname in groups['control-plane']
+
+    - name: Apply Elasticsearch configuration
+      ansible.builtin.command: >
+        kubectl --kubeconfig=/home/asmae/.kube/config apply -f /ELK-kubernetes/elastic.yml
+      when: inventory_hostname in groups['control-plane']
+
+    - name: Apply Elasticsearch service configuration
+      ansible.builtin.command: >
+        kubectl --kubeconfig=/home/asmae/.kube/config apply -f /ELK-kubernetes/elastic-service.yml
+      when: inventory_hostname in groups['control-plane']
+
+    - name: Patch Elasticsearch service to NodePort
+      ansible.builtin.command: >
+        kubectl --kubeconfig=/home/asmae/.kube/config patch svc elasticsearch-logging
+        -n kube-system
+        -p '{"spec": {"type": "NodePort"}}'
+      when: inventory_hostname in groups['control-plane']
+
+    - name: Apply Logstash configuration
+      ansible.builtin.command: >
+        kubectl --kubeconfig=/home/asmae/.kube/config apply -f /ELK-kubernetes/logstash-config.yml
+      when: inventory_hostname in groups['control-plane']
+
+    - name: Apply Logstash deployment
+      ansible.builtin.command: >
+        kubectl --kubeconfig=/home/asmae/.kube/config apply -f /ELK-kubernetes/logstash-deployment.yml
+      when: inventory_hostname in groups['control-plane']
+
+    - name: Copy Filebeat manifest template to host
+      ansible.builtin.template:
+        src: ../templates/filebeat.yaml.j2
+        dest: /tmp/filebeat.yaml
+      when: inventory_hostname in groups['control-plane']
+
+
+    - name: Apply Filebeat configuration
+      ansible.builtin.command: >
+        kubectl --kubeconfig=/home/asmae/.kube/config apply -f /tmp/filebeat.yaml
+      when: inventory_hostname in groups['control-plane']
+
+    - name: Apply Kibana configuration
+      ansible.builtin.command: >
+        kubectl --kubeconfig=/home/asmae/.kube/config apply -f /ELK-kubernetes/kibana.yml
+      when: inventory_hostname in groups['control-plane']
+
+    - name: restarting the deamonset
+      ansible.builtin.command: >
+        kubectl --kubeconfig=/home/asmae/.kube/config  rollout restart daemonset filebeat -n kube-system
+      when: inventory_hostname in groups['control-plane']
+
+
+  #_cat/indices?v for checking  logstash

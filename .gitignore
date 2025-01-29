@@ -2,9 +2,6 @@
 terraform/.terraform/
 terraform/terraform.tfstate
 terraform/terraform.tfstate.backup
-k8s_setup/roles/apps/tasks/elk.yaml
-k8s_setup/roles/apps/tasks/monitoring.yaml
-k8s_setup/roles/apps/templates/filebeat.yaml.j2 
 TEST.txt
 terraform.tfstate
 k8s_setup/terraform.tfstate

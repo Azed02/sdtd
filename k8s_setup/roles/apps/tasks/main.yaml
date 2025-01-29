@@ -5,8 +5,11 @@
   import_tasks: kafka.yaml
 
 
-- name: integrate kafka
-  import_tasks: kafka.yaml
+# - name: integrate prometheus
+#   import_tasks: prometheus.yaml
 
-- name: integrate prometheus
-  import_tasks: prometheus.yaml
+- name: integrate monitoring stack
+  import_tasks: monitoring.yaml
+
+- name: integrate elk logging
+  import_tasks: elk.yaml
