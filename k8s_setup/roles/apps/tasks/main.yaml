@@ -4,6 +4,9 @@
 - name: integrate kafka
   import_tasks: kafka.yaml
 
-# - name: Deploy Frontend and Backend Applications
-#   import_tasks: frontend-backend.yaml
 
+- name: integrate kafka
+  import_tasks: kafka.yaml
+
+- name: integrate prometheus
+  import_tasks: prometheus.yaml
