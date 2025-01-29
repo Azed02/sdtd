@@ -80,7 +80,7 @@ resource "google_compute_instance" "k8s_nodes" {
   }
 
   metadata = {
-    ssh-keys = "asmae:${file("~/.ssh/gcp_key.pub")}"
+    ssh-keys = "asmae:${file("/tmp/.ssh/gcp_key.pub")}"
   }
 
   service_account {
