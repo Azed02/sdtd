@@ -12,6 +12,10 @@ all:
       ansible_host: ${instance_ips.node3}
       ansible_user: asmae
       ansible_ssh_private_key_file: ~/.ssh/gcp_key
+    worker3:
+      ansible_host: ${instance_ips.node4}
+      ansible_user: asmae
+      ansible_ssh_private_key_file: ~/.ssh/gcp_key
   children:
     control-plane:
       hosts:
@@ -20,6 +24,7 @@ all:
       hosts:
         worker1:
         worker2:
+        worker3:
     etcd:
       hosts:
         master:
