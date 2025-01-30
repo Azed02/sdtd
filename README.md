@@ -66,12 +66,6 @@ http://<public-ip-address>:<port>
   - `roles/kubernetes`: Master and worker node configurations.
 - `terraform`: Contains Terraform configuration files.
 
-## Things to Fix
-
-- **Frontend**: The front-end is currently very minimal and needs improvement.
-- **Kube Config Issue**: `.kube/config` is not automatically generated, which requires manual intervention.
-- **Graph Generation**: The producer script occasionally generates parameters that lead to empty graphs. The consumer script needs optimization to handle such cases.
-
 ## Tips for Easy Access and Modifications
 
 - **Python Scripts**:
@@ -87,5 +81,25 @@ http://<public-ip-address>:<port>
 ## Monitoring
 
 This project integrates **Argo CD** to monitor the state of the Kubernetes cluster. Use the Argo CD UI to track deployments and configurations.
+
+to see argocd 
+```bash
+kubectl get pods -n argoccd
+```
+
+**Prometheus** is used to get different information about how our pods are running and we use **Grafana** to display it.
+We also have **ELK** to manage our logs.
+
+Finnaly **AlertManager** is already installed but no alarm are setup by default.
+
+Those are running on the monitoring namespace, to see them you can : 
+```bash
+kubectl get pods -o wide --namespace=monitoring
+```
+
+
+Prometheus: Accessible at http://<public-ip-address>:30000 \
+Grafana: Accessible at http://<public-ip-address>:31000 \
+AlertManager: Accessible at http://<public-ip-address>:32000
 
 Enjoy working with this project and feel free to enhance its capabilities!
